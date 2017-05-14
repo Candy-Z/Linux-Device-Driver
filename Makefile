@@ -8,3 +8,9 @@ module:
 clean:
 	make -C $(KDIR) M=`pwd` clean
 
+install:
+	./scull_load
+
+uninstall:
+	./scull_unload
+
