@@ -7,36 +7,23 @@
 
 #endif //SCULL_ZXL_SCULL_H
 
-#include <linux/cdev.h>
+#define SCULL_IOC_MAGIC 'x'
 
-/*数据定义*/
-struct scull_dev{
-    void *data;
-    int qset;
-    int quantum;
-    int size;
-    struct cdev cdev;
-};
+#define SCULL_IOCRESET _IO(SCULL_IOC_MAGIC, 0)
+#define SCULL_IOCTQSET _IO(SCULL_IOC_MAGIC, 1)
+#define SCULL_IOCTQUANTUM _IO(SCULL_IOC_MAGIC, 2)
+#define SCULL_IOCSQSET _IOW(SCULL_IOC_MAGIC, 3, int)
+#define SCULL_IOCSQUANTUM _IOW(SCULL_IOC_MAGIC, 4, int)
+#define SCULL_IOCQQSET _IO(SCULL_IOC_MAGIC, 5)
+#define SCULL_IOCQQUANTUM _IO(SCULL_IOC_MAGIC, 6)
+#define SCULL_IOCGQSET _IOR(SCULL_IOC_MAGIC, 7, int)
+#define SCULL_IOCGQUANTUM _IOR(SCULL_IOC_MAGIC, 8, int)
+#define SCULL_IOCHQSET _IO(SCULL_IOC_MAGIC, 9)
+#define SCULL_IOCHQUANTUM _IO(SCULL_IOC_MAGIC, 10)
+#define SCULL_IOCXQSET _IOWR(SCULL_IOC_MAGIC, 11, int)
+#define SCULL_IOCXQUANTUM _IOWR(SCULL_IOC_MAGIC, 12, int)
 
-struct scull_qset{
-    void **data;
-    struct scull_qset *next;
-};
+#define SCULL_IOC_MAXNUM 13
 
-/*函数定义*/
-void scull_trim(struct scull_dev *dev);
-
-static void scull_exit(void);
-static int scull_init(void);
-
-int scull_open(struct inode *inode, struct file *filp);
-int scull_release(struct inode *inode, struct file *filp);
-ssize_t scull_read(struct file *filp, char __user *buff, size_t count, loff_t *fpos);
-ssize_t scull_write(struct file *filp, const char __user *buff, size_t count, loff_t *fpos);
-
-static void *scull_seq_start(struct seq_file *sfile, loff_t *pos);
-static void scull_seq_stop(struct seq_file *sfile, void *v);
-static void *scull_seq_next(struct seq_file *sfile, void *v, loff_t *pos);
-static int scull_seq_show(struct seq_file *sfile, void *v);
-int scull_seq_open(struct inode *inode, struct file *filp);
-
+#define SCULL_QSET 10
+#define SCULL_QUANTUM 500
